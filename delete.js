@@ -1,6 +1,6 @@
 import * as dbLib from './libs/dynamodb-lib';
 import { success, failure } from './libs/response-lib';
-import { DynamoDB } from 'aws-sdk';
+
 
 export async function main(event, context) {
   const params = {
