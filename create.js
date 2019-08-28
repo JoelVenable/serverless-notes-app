@@ -9,16 +9,18 @@ export async function main(event, context) {
 
   const params = {
     TableName: "notes",
-    Key: {
+    Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      noteId: event.pathParameters.id
+      noteId: uuid.v1(),
+      content: data.content,
+      attachment: data.attachment,
+      createdAt: Date.now()
     }
   };
 
   try {
-    const result = await dbLib.call("get", params);
-    if (result.Item) return success(params.Item);
-    else return failure({ status: false, error: "Item not found" });
+    await dbLib.call("put", params);
+    return success(params.Item);
   } catch (e) {
     return failure({ status: false });
   }
